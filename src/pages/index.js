@@ -101,11 +101,11 @@ class Index extends React.Component {
         <Grid item s>
         <Paper className={classes.paper}>
         <Typography type="display1">
-          day
+          {JSON.stringify(value.datetime)}
         </Typography>
         {/* <img src={`${weatherIcon}`} alt="WeatherIcon" height="64" width="64" /> */}
         <Typography type="subheading" >
-          "max min"
+          {JSON.stringify(value.temp_min)} {JSON.stringify(value.temp_max)}
         </Typography>
               </Paper>
             </Grid>
