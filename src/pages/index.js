@@ -11,6 +11,8 @@ import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+
 //Images
 import thunderstorm from '../images/Thunderstorm.png'
 import drizzle from '../images/Drizzle.png'
@@ -41,35 +43,57 @@ const styles = theme => ({
   },
   control: {
     padding: theme.spacing.unit * 2
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
   }
 });
 
 
 class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+    this.cities = [1,2,3,4,5,6]
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   state = {
     open: false,
   };
 
-  handleClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
 
-  handleClick = () => {
-    this.setState({
-      open: true,
-    });
-  };
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    window.history.pushState(this.state.value, this.state.value+'\'s forecast', '/'+this.state.value);
+    event.preventDefault();
+  }
 
   render() {
     const { classes } = this.props;
     const { open } = this.state;
 
     return (
-      <div className={classes.root}>
+      <div>
       <Grid container spacing={24}>
-      {[0, 1, 2, 3, 4].map(value => (
+        <form onSubmit={this.handleSubmit}>
+          <TextField
+          id="city"
+          label="city"
+          margin="normal"
+          value={this.state.value} onChange={this.handleChange}>
+          </TextField>
+        </form>
+      </Grid>
+      <Grid container spacing={24}>
+      {this.cities.map(value => (
         <Grid item s>
         <Paper className={classes.paper}>
         <Typography type="display1">
@@ -84,7 +108,7 @@ class Index extends React.Component {
             ))}
         
       </Grid>
-    </div>
+      </div>
     );
   }
 }
