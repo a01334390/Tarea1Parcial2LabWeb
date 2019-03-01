@@ -9,13 +9,41 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import withRoot from '../withRoot';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+//Images
+import thunderstorm from '../images/Thunderstorm.png'
+import drizzle from '../images/Drizzle.png'
+import rain from '../images/Rain.png'
+import snow from '../images/Snow.png'
+import atmosphere from '../images/Atmosphere.png'
+import clear from '../images/Clear.png'
+import clouds from '../images/Cloudy.png'
+import extreme from '../images/Extreme.png'
+
 
 const styles = theme => ({
+  flex: {
+    display: 'flex',
+    flexWrap: 'wrap'
+ },
   root: {
-    textAlign: 'center',
-    paddingTop: theme.spacing.unit * 20,
+    // textAlign: 'center',
+    // paddingTop: theme.spacing.unit * 20,
+    flexGrow : 1
   },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    height: 200,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing.unit * 2
+  }
 });
+
 
 class Index extends React.Component {
   state = {
@@ -40,27 +68,23 @@ class Index extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Dialog open={open} onClose={this.handleClose}>
-          <DialogTitle>Super Secret Password</DialogTitle>
-          <DialogContent>
-            <DialogContentText>1-2-3-4-5</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={this.handleClose}>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Typography variant="h4" gutterBottom>
-          Material-UI
+      <Grid container spacing={24}>
+      {[0, 1, 2, 3, 4].map(value => (
+        <Grid item s>
+        <Paper className={classes.paper}>
+        <Typography type="display1">
+          dia
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          example project
+        {/* <img src={`${weatherIcon}`} alt="WeatherIcon" height="64" width="64" /> */}
+        <Typography type="subheading" >
+          "max min"
         </Typography>
-        <Button variant="contained" color="secondary" onClick={this.handleClick}>
-          Super Secret Password
-        </Button>
-      </div>
+              </Paper>
+            </Grid>
+            ))}
+        
+      </Grid>
+    </div>
     );
   }
 }
