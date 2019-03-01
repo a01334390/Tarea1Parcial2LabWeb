@@ -1,13 +1,13 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var WeatherConstants = require('../constants/WeatherConstants');
-var WeatherAPI = require('../utils/weatherAPI');
+var WeatherAPI = require('../util/weatherAPI');
 
 module.exports = {
-    getRandom: function() {
+    getRandom: function(city) {
         AppDispatcher.handleViewAction({
           actionType: WeatherConstants.GET_WEATHER
         });
     
-        WeatherAPI.get();
+        WeatherAPI.get(city);
       }
 }

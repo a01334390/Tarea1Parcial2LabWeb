@@ -2,12 +2,13 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/WeatherConstants');
 var ObjectAssign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
+// const loadJsonFile = require('load-json-file');
 
 var CHANGE_EVENT = 'change';
 
 var _store = {
     list: [],
-    editing: false
+    editing: true
 }
 
 var WeatherStore = ObjectAssign({},EventEmitter.prototype,{
@@ -32,7 +33,25 @@ AppDispatcher.register(function(payload){
         break;
 
         case AppConstants.GET_WEATHER_RESPONSE:
-            _store.list.push(action)
+            // var obj = JSON.parse(action)
+            var x = []
+            for(var i = 0; i < action.response.list.length; i++){
+                if(i%4==0 && i%8!=0){
+                    var obj = {}
+                    obj.temp = JSON.stringify(action.response.list[i].main.temp)
+                    obj.temp_min = JSON.stringify(action.response.list[i].main.temp_min)
+                    obj.temp_max = JSON.stringify(action.response.list[i].main.temp_max)
+                    obj.pressure = JSON.stringify(action.response.list[i].main.pressure)
+                    obj.humidity = JSON.stringify(action.response.list[i].main.humidity)
+                    obj.datetime = JSON.stringify(action.response.list[i].dt_txt)
+                    _store.list.push(obj)
+                }
+            }
+            alert(_store.list.length)
+
+            WeatherStore.emit(CHANGE_EVENT)
         break;
     }
 })
+
+module.exports = WeatherStore;

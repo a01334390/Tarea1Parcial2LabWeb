@@ -23,6 +23,9 @@ import clear from '../images/Clear.png'
 import clouds from '../images/Cloudy.png'
 import extreme from '../images/Extreme.png'
 
+//Flux stuff
+var WeatherStore = require('../stores/WeatherStore')
+var WeatherActions = require('../actions/WeatherActions')
 
 const styles = theme => ({
   flex: {
@@ -56,7 +59,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {value: ''};
-    this.cities = [1,2,3,4,5,6]
+    this.cities = WeatherStore.getList().list
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -71,8 +74,9 @@ class Index extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
     window.history.pushState(this.state.value, this.state.value+'\'s forecast', '/'+this.state.value);
+    console.log('Retrieving weather data for: '+this.state.value);
+    WeatherActions.getRandom(this.state.value)
     event.preventDefault();
   }
 
@@ -97,7 +101,7 @@ class Index extends React.Component {
         <Grid item s>
         <Paper className={classes.paper}>
         <Typography type="display1">
-          dia
+          day
         </Typography>
         {/* <img src={`${weatherIcon}`} alt="WeatherIcon" height="64" width="64" /> */}
         <Typography type="subheading" >
