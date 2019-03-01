@@ -74,6 +74,7 @@ class Index extends React.Component {
   }
 
   handleSubmit(event) {
+    WeatherStore.clearList();
     window.history.pushState(this.state.value, this.state.value+'\'s forecast', '/'+this.state.value);
     console.log('Retrieving weather data for: '+this.state.value);
     WeatherActions.getRandom(this.state.value)

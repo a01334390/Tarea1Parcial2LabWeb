@@ -22,6 +22,10 @@ var WeatherStore = ObjectAssign({},EventEmitter.prototype,{
     
       getList: function() {
         return _store;
+      },
+
+      clearList: function(){
+        _store.list.splice(0,_store.list.length)
       }
 });
 
@@ -47,7 +51,6 @@ AppDispatcher.register(function(payload){
                     _store.list.push(obj)
                 }
             }
-            alert(_store.list.length)
 
             WeatherStore.emit(CHANGE_EVENT)
         break;
