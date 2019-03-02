@@ -10,6 +10,7 @@ const styleSheet = createStyleSheet({
     marginTop: 8,
     width: '100%',
     marginBottom: 16
+
   },
 });
 

@@ -34,23 +34,34 @@ const styles = theme => ({
  },
   root: {
     // textAlign: 'center',
-    // paddingTop: theme.spacing.unit * 20,
-    flexGrow : 1
+    // paddingTop: theme.spacing.unit * 20, 
+    flexGrow : 1,
+    fontfamily: 'Raleway, sans-serif',
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit,
     textAlign: 'center',
     color: theme.palette.text.secondary,
     height: 200,
-    width: 100
+    width: 100,
+    marginTop: '5%',
   },
   control: {
     padding: theme.spacing.unit * 2
   },
+  styles: {
+    width: '100%',
+    fontsize: '4em',
+    fontfamily: 'Raleway, sans-serif',
+    textAlign: 'center'
+  },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
+    marginLeft: theme.spacing.unit * 5,
+    width: 300,
+  },
+  Typography: {
+    fontfamily: 'Raleway, sans-serif',
+    textAlign: 'center'
   }
 });
 
@@ -87,7 +98,19 @@ class Index extends React.Component {
 
     return (
       <div>
-      <Grid container spacing={24}>
+      <Grid container spacing={24}
+       justify="center"
+       alignItems="center">
+      <Grid container spacing={12}
+      justify="center"
+      alignItems="center">
+      <Typography component="h2" variant="h1" gutterBottom>
+        Selector de ciudad
+      </Typography>
+      </Grid>
+      <Grid container spacing={6}
+      justify="center"
+      alignItems="center">
         <form onSubmit={this.handleSubmit}>
           <TextField
           id="city"
@@ -96,6 +119,7 @@ class Index extends React.Component {
           value={this.state.value} onChange={this.handleChange}>
           </TextField>
         </form>
+        </Grid>
       </Grid>
       <Grid container spacing={24}>
       {this.cities.map(value => (

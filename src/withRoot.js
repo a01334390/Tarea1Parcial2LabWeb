@@ -3,6 +3,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -13,14 +14,14 @@ const theme = createMuiTheme({
       main: purple[500],
       dark: purple[700],
     },
+    typography: {
+      fontFamily: '"Comfortaa", cursive',
+    },
     secondary: {
       light: green[300],
       main: green[500],
       dark: green[700],
     },
-  },
-  typography: {
-    useNextVariants: true,
   },
 });
 
