@@ -30,11 +30,14 @@ var WeatherActions = require('../actions/WeatherActions')
 const styles = theme => ({
   flex: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    marginLeft: 20,
+    marginRight: 20
+ },
+ container: {
+   
  },
   root: {
-    // textAlign: 'center',
-    // paddingTop: theme.spacing.unit * 20, 
     flexGrow : 1,
     fontfamily: 'Raleway, sans-serif',
   },
@@ -64,6 +67,10 @@ const styles = theme => ({
     textAlign: 'center'
   }
 });
+
+const styleBox = {
+  marginTop: '5rem',
+}
 
 
 class Index extends React.Component {
@@ -98,9 +105,13 @@ class Index extends React.Component {
 
     return (
       <div>
-      <Grid container spacing={24}
-       justify="center"
-       alignItems="center">
+      <Grid 
+      container 
+      spacing={24}
+      justify="center"
+      alignItems="center"
+      style={styleBox}
+      >
       <Grid container spacing={12}
       justify="center"
       alignItems="center">
@@ -121,7 +132,12 @@ class Index extends React.Component {
         </form>
         </Grid>
       </Grid>
-      <Grid container spacing={24}>
+      <Grid 
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      spacing={24}>
       {this.cities.map(value => (
         <Grid item s>
         <Paper className={classes.paper}>
