@@ -5,7 +5,6 @@ import green from '@material-ui/core/colors/green';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid'
-
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
@@ -16,7 +15,18 @@ const theme = createMuiTheme({
       dark: purple[700],
     },
     typography: {
-      fontFamily: '"Comfortaa", cursive',
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Lato',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
     secondary: {
       light: green[300],
