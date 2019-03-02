@@ -33,7 +33,8 @@ AppDispatcher.register(function(payload){
     var action = payload.action;
     switch(action.actionType){
         case AppConstants.GET_WEATHER:
-
+          _store.editing = true;
+          WeatherStore.emit(CHANGE_EVENT);
         break;
 
         case AppConstants.GET_WEATHER_RESPONSE:
@@ -47,7 +48,7 @@ AppDispatcher.register(function(payload){
                     obj.temp_max = JSON.stringify(action.response.list[i].main.temp_max)
                     obj.pressure = JSON.stringify(action.response.list[i].main.pressure)
                     obj.humidity = JSON.stringify(action.response.list[i].main.humidity)
-                    obj.description = JSON.stringify(action.response.list[i].weather.main)
+                    obj.description = JSON.stringify(action.response.list[i].weather[0].description)
                     obj.datetime = JSON.stringify(action.response.list[i].dt_txt)
                     _store.list.push(obj)
                 }

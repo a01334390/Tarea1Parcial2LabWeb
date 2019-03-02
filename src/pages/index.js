@@ -12,6 +12,9 @@ import withRoot from '../withRoot';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import 'typeface-lato'
 
 //Images
 import thunderstorm from '../images/Thunderstorm.png'
@@ -32,22 +35,23 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
  },
  container: {
    
  },
   root: {
     flexGrow : 1,
-    fontfamily: 'Raleway, sans-serif',
+    // fontfamily: 'Lato, sans-serif',
   },
   paper: {
     padding: theme.spacing.unit,
     textAlign: 'center',
     color: theme.palette.text.secondary,
-    height: 200,
-    width: 100,
-    marginTop: '5%',
+    background: 'inherit',
+    height: '15rem',
+    width: '10rem',
+    marginTop: '10%',
   },
   control: {
     padding: theme.spacing.unit * 2
@@ -55,15 +59,16 @@ const styles = theme => ({
   styles: {
     width: '100%',
     fontsize: '4em',
-    fontfamily: 'Raleway, sans-serif',
-    textAlign: 'center'
+    fontfamily: 'Lato, sans-serif',
+    textAlign: 'center',
+    
   },
   textField: {
     marginLeft: theme.spacing.unit * 5,
     width: 300,
   },
   Typography: {
-    fontfamily: 'Raleway, sans-serif',
+    fontfamily: 'Lato, sans-serif',
     textAlign: 'center'
   }
 });
@@ -74,6 +79,14 @@ const styleBox = {
 
 
 class Index extends React.Component {
+
+  componentDidMount () {
+    var uri = window.location.pathname.replace('\/','')
+    if(uri!=""){
+      this.sttHandleSubmit(uri)
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -89,22 +102,67 @@ class Index extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    this.forceUpdate()
+  }
+
+  sttHandleSubmit(uri){
+    WeatherStore.clearList();
+    console.log('Retrieving weather data for: '+uri);
+    this.setState({value: uri})
+    WeatherActions.getRandom(uri)
   }
 
   handleSubmit(event) {
     WeatherStore.clearList();
     window.history.pushState(this.state.value, this.state.value+'\'s forecast', '/'+this.state.value);
     console.log('Retrieving weather data for: '+this.state.value);
-    WeatherActions.getRandom(this.state.value)
+    WeatherActions.getRandom(this.state.value);
     event.preventDefault();
+  }
+
+  toggleImage(weather){
+    switch((((weather.replace("\"","")).replace("\\\"","")).replace("\"","")).replace("\\\"","")) {
+      case 'Thunderstorm': case "thunderstorm with light rain": case "thunderstorm with rain": case "thunderstorm with heavy rain": case "light thunderstorm": case "thunderstorm": case "heavy thunderstorm": case "ragged thunderstorm": case "thunderstorm with light drizzle": case "thunderstorm with drizzle": case "thunderstorm with heavy drizzle":
+          return thunderstorm
+          break
+      case 'Drizzle': case "light intensity drizzle": case "drizzle": case "heavy intensity drizzle": case "light intensity drizzle rain": case "drizzle rain": case "heavy intensity drizzle rain": case "shower rain and drizzle": case "heavy shower rain and drizzle": case "shower drizzle":
+      return drizzle
+          break
+      case 'Rain': case "light rain": case "moderate rain": case "heavy intensity rain": case "very heavy rain": case "extreme rain": case "freezing rain": case "light intensity shower rain": case "shower rain": case "heavy intensity shower rain": case "ragged shower rain":
+          return rain
+          break
+      case 'Snow': case "light snow": case "snow": case "heavy snow": case "sleet": case "shower sleet": case "light rain and snow": case "rain and snow": case "light shower snow": case "shower snow": case "heavy shower snow":
+          return snow
+          break
+      case 'Atmosphere': case "mist": case "smoke": case "haze": case "sand, dust whirls": case "fog": case "sand": case "dust": case "volcanic ash": case "squalls": case "tornado":
+          return atmosphere
+          break
+      case 'Clear': case "clear sky":
+          return clear
+          break
+      case 'Clouds': case "broken clouds": case "overcast clouds": case "scattered clouds": case "few clouds":
+          return clouds
+          break
+      case 'Extreme':
+          return extreme
+          break
+      default:
+        return rain
+    }
   }
 
   render() {
     const { classes } = this.props;
     const { open } = this.state;
-
     return (
       <div>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" color="inherit">
+            Weather App using Flux
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Grid 
       container 
       spacing={24}
@@ -115,21 +173,39 @@ class Index extends React.Component {
       <Grid container spacing={12}
       justify="center"
       alignItems="center">
-      <Typography component="h2" variant="h1" gutterBottom>
-        Selector de ciudad
+      <Typography className={classes.root} component="h2" variant="h1" gutterBottom align="center">
+        Consulta de clima
       </Typography>
       </Grid>
       <Grid container spacing={6}
       justify="center"
-      alignItems="center">
-        <form onSubmit={this.handleSubmit}>
-          <TextField
+      alignItems="center"
+      direction="column">
+      <Grid item s>
+      <form onSubmit={this.handleSubmit}>
+          
+      <TextField
           id="city"
-          label="city"
+          label="Ciudad"
           margin="normal"
-          value={this.state.value} onChange={this.handleChange}>
+          value={this.state.value} 
+          onChange={this.handleChange}
+          >
           </TextField>
+          
         </form>
+      
+      </Grid>
+      <Grid item s style={{margin: 10}}>
+      <Button variant="contained" onClick={this.handleSubmit}>
+            Submit
+          </Button>
+      </Grid>
+      <Grid item s style={{margin: 10}}>
+      <Button variant="contained" onClick={this.handleChange}>
+          Show
+          </Button>
+      </Grid>
         </Grid>
       </Grid>
       <Grid 
@@ -137,17 +213,34 @@ class Index extends React.Component {
       direction="row"
       justify="center"
       alignItems="center"
-      spacing={24}>
+      spacing={24}
+      >
       {this.cities.map(value => (
         <Grid item s>
         <Paper className={classes.paper}>
         <Typography type="display1">
-          {JSON.stringify(value.datetime)}
+          {((((JSON.stringify(value.datetime)).replace("\\\"",""))).replace("\\\"",""))}
         </Typography>
-        {/* <img src={`${weatherIcon}`} alt="WeatherIcon" height="64" width="64" /> */}
-        <Typography type="subheading" >
-          {JSON.stringify(value.temp_min)} {JSON.stringify(value.temp_max)}
+        <img style={{height : "5rem",width : "5rem"}}src={this.toggleImage(JSON.stringify(value.description))}></img>
+        <Typography type="subheading" style={{fontWeight: "bold"}}>
+          Minima: 
         </Typography>
+        <Typography type="subheading" style={{fontWeight: "lighter"}}>
+        {JSON.stringify(value.temp_min).replace("\"","").replace("\"","")+"°"}
+        </Typography>
+        <Typography type="subheading" style={{fontWeight: "bold"}}>
+          Maxima: 
+        </Typography>
+        <Typography type="subheading" style={{fontWeight: "lighter"}}>
+          {JSON.stringify(value.temp_max).replace("\"","").replace("\"","")+"°"}
+        </Typography>
+        <Typography type="subheading" style={{fontWeight: "bold"}}>
+          Condicion: 
+        </Typography>
+        <Typography type="h4" style={{fontWeight: "lighter"}}>
+        {(((JSON.stringify(value.description).replace("\"","")).replace("\\\"","")).replace("\"","")).replace("\\\"","")}
+        </Typography>
+        
               </Paper>
             </Grid>
             ))}

@@ -12,7 +12,8 @@
     "react-dom": "latest",
     "react-scripts": "latest",
     "superagent": "^4.1.0",
-    "typeface-comfortaa": "0.0.72"
+    "typeface-comfortaa": "0.0.72",
+    "typeface-lato": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
